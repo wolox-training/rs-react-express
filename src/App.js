@@ -21,7 +21,7 @@ function App() {
         </header>
         <Switch>
           <Route path="/sign_up">
-            <Signup title="SIGNUP" />
+            <Signup />
           </Route>
           <Route path="/">
             <Login />
