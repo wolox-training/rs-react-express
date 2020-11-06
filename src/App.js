@@ -21,11 +21,6 @@ function App() {
             <Login />
           </Route>
         </Switch>
-        <footer>
-          <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-            Learn React
-          </a>
-        </footer>
       </div>
     </Router>
   );
