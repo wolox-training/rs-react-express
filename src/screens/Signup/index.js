@@ -1,54 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
 
-const Signup = () => {
-  const [user, setUser] = useState({});
-  const { register, handleSubmit, errors } = useForm();
+import { createUser } from '../../services/UserServices';
+
+import Singup from './layout';
+
+const SignupContainer = () => {
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [failure, setFailure] = useState(false);
+  const [message, setMessage] = useState('');
   const onSubmit = data => {
-    setUser({ ...data, locale: 'en' });
+    setLoading(true);
+    createUser({ ...data, locale: 'en' })
+      .then(
+        response => {
+          setSuccess(response.ok);
+          setFailure(!response.ok);
+        },
+        () => {
+          setFailure(true);
+          setSuccess(false);
+        }
+      )
+      .finally(() => setLoading(false));
   };
 
   useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log('useEffect: ', { user });
-  }, [user]);
+    if (success) {
+      setMessage('El usuario fue creado correctamente');
+    }
+    if (failure) {
+      setMessage('Error al crear el usuario');
+    }
+  }, [success, failure]);
 
-  return (
-    <form onSubmit={handleSubmit(onSubmit)} className="column center full-width m-top-5 m-bottom-5">
-      <div className="column">
-        <label>Nombre</label>
-        <input name="first_name" ref={register({ required: true })} />
-        {errors.first_name && <p>Requerido</p>}
-      </div>
-      <div className="column m-top-2">
-        <label>Apellido</label>
-        <input name="last_name" ref={register({ required: true })} />
-        {errors.last_name && <p>Requerido</p>}
-      </div>
-      <div className="column m-top-2">
-        <label>Email</label>
-        <input name="email" ref={register({ required: true })} />
-        {errors.email && <p>Requerido</p>}
-      </div>
-      <div className="column m-top-2">
-        <label>Password</label>
-        <input name="password" ref={register({ required: true })} />
-        {errors.password && <p>Requerido</p>}
-      </div>
-      <div className="column m-top-2">
-        <label>Confirmación de Password</label>
-        <input name="password_confirmation" ref={register({ required: true })} />
-        {errors.password_confirmation && <p>Requerido</p>}
-      </div>
-      <button type="submit" className="m-top-2">
-        Sign Up
-      </button>
-      <Link to="/" className="m-top-2">
-        Login
-      </Link>
-    </form>
-  );
+  return <Singup loading={loading} message={message} onSubmit={onSubmit} />;
 };
 
-export default Signup;
+export default SignupContainer;
