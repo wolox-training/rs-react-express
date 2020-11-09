@@ -1,11 +1,12 @@
 import React from 'react';
 
 import Navbar from '../../components/Navbar';
+import BookList from '../../components/BookList';
 
 const Home = () => (
   <div className="column">
     <Navbar />
-    <h1>Home</h1>
+    <BookList />
   </div>
 );
 

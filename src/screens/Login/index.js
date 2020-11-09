@@ -18,7 +18,7 @@ const LoginContainer = () => {
         response => {
           if (response.ok && response.data && response.data.access_token) {
             LocalStorage.setValue('session', response.data);
-            history.push('/home');
+            history.push('/');
           } else {
             setFailure(!response.ok);
           }

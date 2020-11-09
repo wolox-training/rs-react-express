@@ -1,7 +1,9 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 
 import './App.css';
+import PrivateRoute from './components/PrivateRoute';
+import PublicRoute from './components/PublicRoute';
 import Login from './screens/Login';
 import Signup from './screens/Signup';
 import Home from './screens/Home';
@@ -11,15 +13,15 @@ function App() {
     <Router>
       <div className="App">
         <Switch>
-          <Route path="/home">
-            <Home />
-          </Route>
-          <Route path="/sign_up">
+          <PublicRoute path="/sign_up">
             <Signup />
-          </Route>
-          <Route path="/">
+          </PublicRoute>
+          <PublicRoute path="/login">
             <Login />
-          </Route>
+          </PublicRoute>
+          <PrivateRoute path="/">
+            <Home />
+          </PrivateRoute>
         </Switch>
       </div>
     </Router>
