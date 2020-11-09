@@ -13,15 +13,15 @@ function App() {
     <Router>
       <div className="App">
         <Switch>
-          <PrivateRoute path="/home">
-            <Home />
-          </PrivateRoute>
           <PublicRoute path="/sign_up">
             <Signup />
           </PublicRoute>
-          <PublicRoute path="/">
+          <PublicRoute path="/login">
             <Login />
           </PublicRoute>
+          <PrivateRoute path="/">
+            <Home />
+          </PrivateRoute>
         </Switch>
       </div>
     </Router>

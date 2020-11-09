@@ -14,7 +14,7 @@ const PublicRoute = ({ children, ...rest }) => {
         auth && auth.access_token ? (
           <Redirect
             to={{
-              pathname: '/home',
+              pathname: '/',
               state: { from: location }
             }}
           />
