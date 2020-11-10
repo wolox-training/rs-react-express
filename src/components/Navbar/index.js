@@ -9,7 +9,7 @@ const NavbarContainer = () => {
   const history = useHistory();
   const onLogout = () => {
     LocalStorage.removeValue('session');
-    history.push('/');
+    history.push('/login');
   };
 
   return <Navbar onLogout={onLogout} />;
