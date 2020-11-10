@@ -2,8 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 
 import './App.css';
-import PrivateRoute from './components/PrivateRoute';
-import PublicRoute from './components/PublicRoute';
+import Route from './components/Route';
 import Login from './screens/Login';
 import Signup from './screens/Signup';
 import Home from './screens/Home';
@@ -13,15 +12,15 @@ function App() {
     <Router>
       <div className="App">
         <Switch>
-          <PublicRoute path="/sign_up">
+          <Route path="/sign_up">
             <Signup />
-          </PublicRoute>
-          <PublicRoute path="/login">
+          </Route>
+          <Route path="/login">
             <Login />
-          </PublicRoute>
-          <PrivateRoute path="/">
+          </Route>
+          <Route path="/" isPrivate>
             <Home />
-          </PrivateRoute>
+          </Route>
         </Switch>
       </div>
     </Router>

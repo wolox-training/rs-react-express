@@ -5,7 +5,6 @@ import defaultImageBook from '../../assets/book.jpg';
 
 const BookList = () => {
   const [loading, setLoading] = useState(false);
-  const [withoutBooks, setWithoutBooks] = useState(false);
   const [bookList, setBookList] = useState([]);
 
   useEffect(() => {
@@ -14,23 +13,10 @@ const BookList = () => {
       .then(
         response => {
           if (response && response.data && response.data.length) {
-            const list = response.data.map(book => (
-              <div className="column m-left-2 m-bottom-2" key={book.id}>
-                <img src={book.image.url || defaultImageBook} alt="" />
-                <span>{book.title}</span>
-                <span>{book.author}</span>
-              </div>
-            ));
-            setBookList(list);
-            setWithoutBooks(false);
-          } else {
-            setWithoutBooks(true);
+            setBookList(response.data);
           }
         },
-        () => {
-          setBookList([]);
-          setWithoutBooks(true);
-        }
+        () => setBookList([])
       )
       .finally(() => setLoading(false));
   }, []);
@@ -41,8 +27,18 @@ const BookList = () => {
         <span>Lista de libros</span>
       </div>
       {loading && <div className="row">Loading...</div>}
-      {withoutBooks && <div className="row">Sin libros</div>}
-      <div className="row wrap center">{bookList}</div>
+      {!loading && !bookList.length && <div className="row">Sin libros</div>}
+      <div className="row wrap center">
+        {!loading &&
+          bookList.length &&
+          bookList.map(book => (
+            <div className="column m-left-2 m-bottom-2" key={book.id}>
+              <img src={book.image.url || defaultImageBook} alt="" />
+              <span>{book.title}</span>
+              <span>{book.author}</span>
+            </div>
+          ))}
+      </div>
     </div>
   );
 };
