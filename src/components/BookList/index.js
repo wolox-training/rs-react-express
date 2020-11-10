@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import { getBooks } from '../../services/BookServices';
 import defaultImageBook from '../../assets/book.jpg';
@@ -13,7 +14,7 @@ const BookList = () => {
       .then(
         response => {
           if (response && response.data && response.data.length) {
-            setBookList(response.data);
+            setBookList(response.data.map(book => ({ ...book, to: `/books/${book.id}` })));
           }
         },
         () => setBookList([])
@@ -33,9 +34,13 @@ const BookList = () => {
           bookList.length &&
           bookList.map(book => (
             <div className="column m-left-2 m-bottom-2" key={book.id}>
-              <img src={book.image.url || defaultImageBook} alt="" />
-              <span>{book.title}</span>
-              <span>{book.author}</span>
+              <Link to={book.to}>
+                <img src={book.image.url || defaultImageBook} alt="" />
+              </Link>
+              <Link to={book.to} className="App-link m-top-2">
+                {book.title}
+              </Link>
+              <span className="m-top-1">Autor: {book.author}</span>
             </div>
           ))}
       </div>
